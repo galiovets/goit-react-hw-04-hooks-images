@@ -28,29 +28,26 @@ export default function App() {
     setLoading(true);
     setAvailableImages(0);
 
-    const fetch = () => {
-      getFetch(searchValue, 1).then(images => {
-        if (images.hits.length === 0) {
-          toast.error('Sorry, nothing was found', {
-            duration: 3000,
-            style: {
-              borderRadius: '10px',
-              background: 'white',
-              color: 'black',
-              padding: '10px',
-              textAlign: 'center',
-            },
-          });
-          return setLoading(false);
-        } else {
-          setImages(prevState => [...prevState, ...images.hits]);
-          setPage(prevState => prevState + 1);
-          setLoading(false);
-          setAvailableImages(images.totalHits);
-        }
-      });
-    };
-    fetch();
+    getFetch(searchValue, 1).then(images => {
+      if (images.hits.length === 0) {
+        toast.error('Sorry, nothing was found', {
+          duration: 3000,
+          style: {
+            borderRadius: '10px',
+            background: 'white',
+            color: 'black',
+            padding: '10px',
+            textAlign: 'center',
+          },
+        });
+        return setLoading(false);
+      } else {
+        setImages(prevState => [...prevState, ...images.hits]);
+        setPage(prevState => prevState + 1);
+        setLoading(false);
+        setAvailableImages(images.totalHits);
+      }
+    });
   }, [searchValue]);
 
   const getSearchValue = searchValue => {
